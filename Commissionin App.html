@@ -1,0 +1,1283 @@
+
+<img src="https://voltempo.com/wp-content/uploads/2024/12/logo-svg-2048x508.png" alt="Voltempo Logo" style="max-width: 100%; height: auto; max-height: 100px;">
+<style>
+
+  .section-desc{
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: rgba(255,255,255,0.9);
+  margin: -6px 0 14px;
+}
+
+
+  :root {
+    --navy: #0d223f;
+    --navy-2: #142d53;
+    --teal: #00c4d6;
+    --green: #26d37b;
+    --white: #ffffff;
+    --red: #d64a4a;
+  }
+/* === Liquid Glass Quick Nav (overrides) === */
+.quick-nav{
+  position: fixed;
+  left: 16px;
+  bottom: 16px;                 /* docked bottom-right */
+  z-index: 9999;
+  padding: 12px;
+  border-radius: 16px;
+  /* glassy background */
+  background: linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0.06));
+  border: 1px solid rgba(255,255,255,0.22);
+  box-shadow: 0 18px 40px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.25);
+  backdrop-filter: blur(12px) saturate(140%);
+  -webkit-backdrop-filter: blur(12px) saturate(140%);
+  max-width: 280px;
+}
+
+.quick-nav .toggle{
+  display: block;
+  width: 100%;
+  cursor: pointer;
+  border: 1px solid rgba(255,255,255,0.25);
+  border-radius: 999px;
+  padding: 10px 14px;
+  font-weight: 600;
+  letter-spacing: .02em;
+  color: var(--white);
+  /* subtle gradient pill */
+  background: linear-gradient(135deg, rgba(0,196,214,0.25), rgba(38,211,123,0.25));
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.25), 0 10px 24px rgba(0,0,0,0.25);
+  backdrop-filter: blur(10px) saturate(140%);
+  -webkit-backdrop-filter: blur(10px) saturate(140%);
+  transition: transform .15s ease, box-shadow .2s ease, background .2s ease;
+}
+
+.quick-nav .toggle:hover{
+  transform: translateY(-1px);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.3), 0 14px 28px rgba(0,0,0,0.35);
+  background: linear-gradient(135deg, rgba(0,196,214,0.3), rgba(38,211,123,0.3));
+}
+
+.quick-nav .body{
+  margin-top: 10px;
+  padding-top: 6px;
+  border-top: 1px solid rgba(255,255,255,0.15);
+  max-height: 45vh;
+  overflow: auto;
+}
+
+/* nav option buttons */
+.quick-nav .body button{
+  display: block;
+  width: 100%;
+  text-align: left;
+  margin: 6px 0;
+  padding: 10px 12px;
+  font-size: .9rem;
+  color: var(--white);
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.18);
+  border-radius: 12px;
+  backdrop-filter: blur(8px) saturate(130%);
+  -webkit-backdrop-filter: blur(8px) saturate(130%);
+  transition: transform .12s ease, background .15s ease, border-color .15s ease, box-shadow .2s ease;
+}
+
+.quick-nav .body button:hover{
+  transform: translateY(-1px);
+  background: rgba(255,255,255,0.12);
+  border-color: rgba(255,255,255,0.28);
+  box-shadow: 0 10px 22px rgba(0,0,0,0.25);
+}
+/* Anchor-styled button to match theme buttons */
+.btn-submit {
+  display: inline-block;
+  padding: 12px 24px;
+  border-radius: 30px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--white);
+  text-decoration: none;
+  background: linear-gradient(135deg, var(--teal), var(--green));
+  transition: background 0.3s, transform 0.2s, opacity 0.2s;
+}
+.btn-submit:hover {
+  opacity: 0.9;
+  transform: scale(1.02);
+}
+
+.quick-nav .body button.active{
+  border-color: var(--teal);
+  box-shadow: 0 0 0 2px rgba(0,196,214,0.35) inset, 0 10px 22px rgba(0,0,0,0.25);
+  background: linear-gradient(135deg, rgba(0,196,214,0.18), rgba(38,211,123,0.18));
+}
+
+/* nice thin scrollbar for the list */
+.quick-nav .body::-webkit-scrollbar{
+  width: 8px;
+}
+.quick-nav .body::-webkit-scrollbar-track{
+  background: rgba(255,255,255,0.05);
+  border-radius: 8px;
+}
+.quick-nav .body::-webkit-scrollbar-thumb{
+  background: rgba(255,255,255,0.22);
+  border-radius: 8px;
+}
+
+  body {
+    font-family: 'Poppins', sans-serif;
+    background: var(--navy);
+    color: var(--white);
+    padding: 40px 20px;
+  }
+
+  h1 {
+    font-size: 2rem;
+    margin-bottom: 30px;
+    color: var(--teal);
+    text-align: center;
+  }
+
+  h2 {
+    font-size: 1.25rem;
+    color: var(--teal);
+    margin-bottom: 10px;
+  }
+
+  section {
+    margin-bottom: 35px;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--navy-2);
+    border-radius: 8px;
+  }
+
+  .item {
+    margin-bottom: 10px;
+  }
+
+  .label-text {
+    display: inline-block;
+    width: 300px;
+  }
+
+  input, textarea {
+    padding: 8px;
+    width: 60%;
+    border: none;
+    border-radius: 5px;
+    font-family: 'Poppins', sans-serif;
+  }
+
+  .nav-buttons {
+    display: flex;
+    justify-content: flex-start;
+    gap: 15px;
+    margin-top: 20px;
+  }
+
+  button {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 30px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--white);
+    background: linear-gradient(135deg, var(--teal), var(--green));
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+  }
+
+  button:hover {
+    opacity: 0.9;
+    transform: scale(1.02);
+  }
+
+  .equipmentForm {
+    margin-bottom: 20px;
+    border-bottom: 1px dashed rgba(255,255,255,0.2);
+    padding-bottom: 15px;
+  }
+
+  img {
+    max-height: 100px;
+    display: block;
+    margin: 0 auto 20px;
+  }
+/* iOS-style switch */
+.item {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.item input[type="checkbox"] {
+  position: relative;
+  width: 50px;
+  height: 26px;
+  -webkit-appearance: none;
+  background: #ccc;
+  outline: none;
+  border-radius: 50px;
+  transition: background 0.3s;
+  cursor: pointer;
+}
+
+.item input[type="checkbox"]::before {
+  content: '';
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  top: 2px;
+  left: 2px;
+  background: white;
+  transition: transform 0.3s;
+}
+
+.item input[type="checkbox"]:checked {
+  background: var(--green);
+}
+
+.item input[type="checkbox"]:checked::before {
+  transform: translateX(24px);
+}
+.camera-icon-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  font-size: 1.5rem;
+  color: var(--teal);
+  transition: transform 0.2s;
+}
+
+.camera-icon-button:hover {
+  transform: scale(1.1);
+}
+
+.thumbnail-preview {
+  max-height: 60px;
+  margin-left: 10px;
+  border-radius: 5px;
+  border: 1px solid var(--teal);
+}
+
+</style>
+
+
+<section id="testEquipmentSection" class="visible">
+  <h2>Record of Test Equipment</h2>
+
+  <!-- This is the form that gets cloned -->
+  <div class="equipmentForm">
+  <div class="item">
+    <label class="label-text" for="equipmentDescription">Description:</label>
+    <input type="text" id="equipmentDescription" name="equipmentDescription" required>
+  </div>
+  <div class="item">
+    <label class="label-text" for="equipmentSerial">Serial Number:</label>
+    <input type="text" id="equipmentSerial" name="equipmentSerial" required>
+  </div>
+  <div class="item">
+    <label class="label-text" for="equipmentCalibration">Calibration:</label>
+    <input type="text" id="equipmentCalibration" name="equipmentCalibration" required>
+  </div>
+</div>
+
+
+  <div class="nav-buttons">
+  <button id="addBtn" type="button">Add</button>
+  <button id="removeBtn" type="button">Remove</button>
+  <button id="nextBtn" type="button">Next</button>
+</div>
+
+</section>
+<section id="preChecksSection" style="display: none;">
+  <h2>Systems and Components to be commissioned</h2>
+
+  <div class="item">
+    <input type="checkbox" id="check1" name="preCheck">
+    <label for="check1" class="label-text">Charging Distribution System</label>
+  </div>
+  <div class="item">
+    <input type="checkbox" id="check2" name="preCheck">
+    <label for="check2" class="label-text">Charging Satelites</label>
+  </div>
+  <div class="item">
+    <input type="checkbox" id="check3" name="preCheck">
+    <label for="check3" class="label-text">Cooling System</label>
+  </div>
+  <div class="item">
+    <input type="checkbox" id="check4" name="preCheck">
+    <label for="check4" class="label-text">Communication interfaces (network, backend software)</label>
+  </div>
+
+
+  
+  <button id="backBtn" type="button">Back</button>
+  <button id="continueFromPreChecksBtn" type="button">Continue</button>
+
+</section>
+
+<section id="incomingSupplySection" style="display: none;">
+
+  <h2>Incoming Supply Characteristics</h2>
+
+ <div class="item">
+  <label class="label-text" for="supply1">Supply cable details:</label>
+  <input type="text" id="supply1" name="supplyCableDetails" required>
+</div>
+
+  <div class="item">
+  <label class="label-text" for="supply2">Nominal Voltage:</label>
+  <input type="text" id="supply2" name="nominalVoltage" required>
+</div>
+
+ <div class="item">
+  <label class="label-text" for="supply3">System Earthing Arrangement:</label>
+  <select id="supply3" name="earthingArrangement" required style="padding: 8px; width: 60%; border-radius: 5px;">
+    <option value="">-- Select --</option>
+    <option value="TN-S">TN-S</option>
+    <option value="TN-C-S">TN-C-S</option>
+    <option value="TT">TT</option>
+  </select>
+</div>
+
+  <div class="item">
+  <label class="label-text" for="supply4">Maximum Available Current:</label>
+  <input type="text" id="supply4" name="maxAvailableCurrent" required>
+</div>
+<div class="item">
+  <label class="label-text" for="supply5">Circuit Protective Device:</label>
+  <input type="text" id="supply5" name="circuitProtectiveDevice" required>
+</div>
+
+
+  <div class="nav-buttons">
+    <button id="backToPreChecksBtn" type="button">Back</button>
+    <button id="continueFromIncomingSupplyBtn" type="button">Continue</button>
+
+  </div>
+</section>
+<section id="transformerDetailsSection" style="display: none;">
+  <h2>Transformer Details</h2>
+
+  <div class="item">
+    <label class="label-text" for="transformerSerial">Serial Number:</label>
+    <input type="text" id="transformerSerial" name="transformerSerial" required>
+  </div>
+
+  <div class="item">
+    <label class="label-text" for="transformerManufacturer">Manufacturer Name:</label>
+    <input type="text" id="transformerManufacturer" name="transformerManufacturer" required>
+  </div>
+
+  <div class="item">
+    <label class="label-text" for="transformerYear">Year of Manufacture:</label>
+    <input type="text" id="transformerYear" name="transformerYear" required>
+  </div>
+
+  <div class="item">
+    <label class="label-text" for="ratedPower">Rated Power:</label>
+    <select id="ratedPower" name="ratedPower" required style="padding: 8px; width: 60%; border-radius: 5px;">
+      <option value="">-- Select --</option>
+      <option value="kVA">kVA</option>
+      <option value="MVA">MVA</option>
+    </select>
+  </div>
+
+  <div class="item">
+    <label class="label-text" for="primaryVoltage">Primary Voltage (HV):</label>
+    <input type="text" id="primaryVoltage" name="primaryVoltage" required>
+  </div>
+
+  <div class="item">
+    <label class="label-text" for="secondaryVoltage">Secondary Voltage (LV):</label>
+    <input type="text" id="secondaryVoltage" name="secondaryVoltage" required>
+  </div>
+
+  <div class="item">
+    <label class="label-text" for="frequency">Frequency:</label>
+    <input type="text" id="frequency" name="frequency" required>
+  </div>
+
+  <div class="nav-buttons">
+    <button id="backToIncomingSupplyBtn" type="button">Back</button>
+    <button id="nextBtn" type="button">Next</button>
+    
+  </div>
+</section>
+<section id="preChecksFinalSection" style="display: none;">
+  
+  <h2>Pre-Checks</h2>
+
+  <div class="item">
+    <label class="label-text" for="manufacturingCert">Manufacturing Test Certificate:</label>
+    <input type="file" id="manufacturingCert" name="manufacturingCert">
+  </div>
+
+  
+
+  <div class="item">
+    <input type="checkbox" id="acTest" />
+    <label for="acTest" class="label-text">Test and inspection of AC supply has been carried out as per BS7671</label>
+  </div>
+
+  <div class="item">
+    <input type="checkbox" id="dcTest" />
+    <label for="dcTest" class="label-text">Test and inspection of DC supply has been carried out as per BS7671</label>
+  </div>
+
+  <div class="item">
+    <input type="checkbox" id="permitsToWork" />
+    <label for="permitsToWork" class="label-text">Permits to work completed</label>
+  </div>
+
+  <div class="item">
+    <input type="checkbox" id="ramsCompleted" />
+    <label for="ramsCompleted" class="label-text">RAMS completed</label>
+  </div>
+
+  <div class="item">
+    <input type="checkbox" id="acbIsolated" />
+    <label for="acbIsolated" class="label-text">ACB is isolated and locked off</label>
+  </div>
+
+  <div class="item">
+    <input type="checkbox" id="acSupplyIsolated" />
+    <label for="acSupplyIsolated" class="label-text">AC supply is isolated and locked off</label>
+  </div>
+
+  <div class="item">
+    <input type="checkbox" id="safetySigns" />
+    <label for="safetySigns" class="label-text">Safety signs and warning labels present</label>
+  </div>
+
+  <div class="nav-buttons">
+    <button id="backToTransformerBtn" type="button">Back</button>
+    <button id="nextBtn" type="button">Next</button>
+    
+    
+  </div>
+</section>
+<section id="foundationInstallChecksSection" style="display: none;">
+  <h2>Main System Foundation Install Checks</h2>
+
+  <!-- Row 1 -->
+<div class="item">
+  <label class="label-text">Are ducts installed correctly with no damage to cabling:</label>
+  
+  <select name="ductsCheck" required style="padding: 8px; width: 20%; border-radius: 5px;">
+    <option value="">-- Select --</option>
+    <option value="Pass">Pass</option>
+    <option value="Fail">Fail</option>
+  </select>
+
+  <textarea name="ductsComment" placeholder="Comments..." rows="2" style="width: 40%;"></textarea>
+
+  <!-- Camera Upload + Icon -->
+  <input type="file" accept="image/*" capture="environment" style="display:none;" onchange="handlePhotoUpload(this)">
+  <button type="button" class="camera-icon-button" onclick="this.previousElementSibling.click()">📷</button>
+  <img class="thumbnail-preview" style="display: none;" />
+</div>
+
+
+  <!-- Row 2 -->
+  <div class="item">
+    <label class="label-text">Are all DC Cables installed to correct standard:</label>
+    <select name="dcCablesCheck" required style="padding: 8px; width: 20%; border-radius: 5px;">
+      <option value="">-- Select --</option>
+      <option value="Pass">Pass</option>
+      <option value="Fail">Fail</option>
+    </select>
+    <textarea name="dcCablesComment" placeholder="Comments..." rows="2" style="width: 40%;"></textarea>
+      <!-- Camera Upload + Icon -->
+  <input type="file" accept="image/*" capture="environment" style="display:none;" onchange="handlePhotoUpload(this)">
+  <button type="button" class="camera-icon-button" onclick="this.previousElementSibling.click()">📷</button>
+  <img class="thumbnail-preview" style="display: none;" />
+
+  </div>
+
+  <!-- Row 3 -->
+  <div class="item">
+    <label class="label-text">System fixed down adequately:</label>
+    <select name="systemFixingCheck" required style="padding: 8px; width: 20%; border-radius: 5px;">
+      <option value="">-- Select --</option>
+      <option value="Pass">Pass</option>
+      <option value="Fail">Fail</option>
+    </select>
+    <textarea name="systemFixingComment" placeholder="Comments..." rows="2" style="width: 40%;"></textarea>
+     <!-- Camera Upload + Icon -->
+  <input type="file" accept="image/*" capture="environment" style="display:none;" onchange="handlePhotoUpload(this)">
+  <button type="button" class="camera-icon-button" onclick="this.previousElementSibling.click()">📷</button>
+  <img class="thumbnail-preview" style="display: none;" />
+
+  </div>
+
+  <!-- Row 4 -->
+  <div class="item">
+    <label class="label-text">No signs of damage to concrete base:</label>
+    <select name="concreteDamageCheck" required style="padding: 8px; width: 20%; border-radius: 5px;">
+      <option value="">-- Select --</option>
+      <option value="Pass">Pass</option>
+      <option value="Fail">Fail</option>
+    </select>
+    <textarea name="concreteDamageComment" placeholder="Comments..." rows="2" style="width: 40%;"></textarea>
+      <!-- Camera Upload + Icon -->
+  <input type="file" accept="image/*" capture="environment" style="display:none;" onchange="handlePhotoUpload(this)">
+  <button type="button" class="camera-icon-button" onclick="this.previousElementSibling.click()">📷</button>
+  <img class="thumbnail-preview" style="display: none;" />
+
+  </div>
+
+  <div class="nav-buttons">
+    <button id="backToPreChecksFinalBtn" type="button">Back</button>
+    <button id="nextBtn" type="button">Next</button>
+  
+  </div>
+</section>
+<section id="chargePodInspectionSection" style="display: none;">
+  <h2>Charge Pod Visual Inspections</h2>
+
+  <!-- Template used for each inspection row -->
+  <div id="chargePodChecklist">
+    <!-- Repeat this block with new labels -->
+    <div class="item">
+      <label class="label-text">Is there any damage to the exterior panels of the Pod and Charge Satellites:</label>
+      <select required style="padding: 8px; width: 20%; border-radius: 5px;">
+        <option value="">-- Select --</option>
+        <option value="Pass">Pass</option>
+        <option value="Fail">Fail</option>
+      </select>
+      <textarea placeholder="Comments..." rows="2" style="width: 40%;"></textarea>
+      <input type="file" accept="image/*" capture="environment" style="display: none;" onchange="handlePhotoUpload(this)">
+      <button type="button" class="camera-icon-button" onclick="this.previousElementSibling.click()">📷</button>
+      <img class="thumbnail-preview" style="display: none;" />
+    </div>
+
+    <!-- Duplicate the div above for each new inspection point and change the label text accordingly -->
+    <div class="item">
+      <label class="label-text">Ensure all door seals are intact and free from damage:</label>
+      <select required style="padding: 8px; width: 20%; border-radius: 5px;">
+        <option value="">-- Select --</option>
+        <option value="Pass">Pass</option>
+        <option value="Fail">Fail</option>
+      </select>
+      <textarea placeholder="Comments..." rows="2" style="width: 40%;"></textarea>
+      <input type="file" accept="image/*" capture="environment" style="display: none;" onchange="handlePhotoUpload(this)">
+      <button type="button" class="camera-icon-button" onclick="this.previousElementSibling.click()">📷</button>
+      <img class="thumbnail-preview" style="display: none;" />
+    </div>
+
+
+
+    
+
+    <!-- Add the rest of the questions by copying the block above and changing the text -->
+    <!-- ... Continue adding more rows for each inspection point ... -->
+  </div>
+
+ <div class="nav-buttons">
+  <button id="backToFoundationBtn" type="button">Back</button>
+  <button id="continueFromChargePodBtn" type="button">Continue</button>
+</div>
+
+</section>
+
+<section id="podSection1InspectionSection" style="display: none;">
+  <h2>Pod – Section 1 Visual Inspections</h2>
+
+  <!-- Row 1 -->
+  <div class="item">
+    <label class="label-text">
+      Section 1 – Visual inspection of witness marks on main AC incoming bus bars ensure no movement has occurred during transit:
+    </label>
+    <select required style="padding: 8px; width: 20%; border-radius: 5px;">
+      <option value="">-- Select --</option>
+      <option value="Pass">Pass</option>
+      <option value="Fail">Fail</option>
+    </select>
+    <textarea placeholder="Comments..." rows="2" style="width: 40%;"></textarea>
+    <input type="file" accept="image/*" capture="environment" style="display:none;" onchange="handlePhotoUpload(this)">
+    <button type="button" class="camera-icon-button" onclick="this.previousElementSibling.click()">📷</button>
+    <img class="thumbnail-preview" style="display: none;" />
+  </div>
+
+  <!-- Row 2 -->
+  <div class="item">
+    <label class="label-text">
+      Visual inspection of LV cabinet checking cable terminations, DC PSU connectors are inserted, fuse holders are inserted and no visible damage:
+    </label>
+    <select required style="padding: 8px; width: 20%; border-radius: 5px;">
+      <option value="">-- Select --</option>
+      <option value="Pass">Pass</option>
+      <option value="Fail">Fail</option>
+    </select>
+    <textarea placeholder="Comments..." rows="2" style="width: 40%;"></textarea>
+    <input type="file" accept="image/*" capture="environment" style="display:none;" onchange="handlePhotoUpload(this)">
+    <button type="button" class="camera-icon-button" onclick="this.previousElementSibling.click()">📷</button>
+    <img class="thumbnail-preview" style="display: none;" />
+  </div>
+
+  <div class="nav-buttons">
+    <button id="backToChargePodBtn" type="button">Back</button>
+    <button onclick="alert('Continue to next step...')">Continue</button>
+  </div>
+
+</section>
+
+<script>
+  /* Compress to JPEG so sessionStorage (~5MB) is not exceeded */
+  async function fileToCompressedDataURL(file, maxDim = 1400, quality = 0.72) {
+    const dataURL = await new Promise((resolve, reject) => {
+      const r = new FileReader();
+      r.onload = () => resolve(r.result);
+      r.onerror = reject;
+      r.readAsDataURL(file);
+    });
+
+    const img = new Image();
+    img.src = dataURL;
+    await new Promise((res, rej) => { img.onload = res; img.onerror = rej; });
+
+    const w = img.naturalWidth, h = img.naturalHeight;
+    let tw = w, th = h;
+    if (Math.max(w, h) > maxDim) {
+      if (w >= h) { tw = maxDim; th = Math.round(h * (maxDim / w)); }
+      else { th = maxDim; tw = Math.round(w * (maxDim / h)); }
+    }
+
+    const canvas = document.createElement('canvas');
+    canvas.width = tw; canvas.height = th;
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(img, 0, 0, tw, th);
+    return canvas.toDataURL('image/jpeg', quality);
+  }
+
+  // Keep this global so dynamic sections can use it
+  async function handlePhotoUpload(input) {
+    if (!input.files || !input.files[0]) return;
+    const file = input.files[0];
+
+    let dataUrl;
+    try {
+      dataUrl = await fileToCompressedDataURL(file, 1400, 0.72);
+    } catch (e) {
+      console.warn('Compression failed; using raw dataURL', e);
+      dataUrl = await new Promise((resolve, reject) => {
+        const r = new FileReader();
+        r.onload = () => resolve(r.result);
+        r.onerror = reject;
+        r.readAsDataURL(file);
+      });
+    }
+
+    // Show thumbnail (your DOM: file → button → img)
+    const thumbnail = input.nextElementSibling?.nextElementSibling;
+    if (thumbnail) {
+      thumbnail.src = dataUrl;
+      thumbnail.style.display = "inline-block";
+    }
+
+    // Save on the row (.item) so collectFormData can attach it
+    const item = input.closest('.item');
+    if (item) {
+      const existing = item.dataset.photos ? JSON.parse(item.dataset.photos) : [];
+      existing.push(dataUrl);
+      item.dataset.photos = JSON.stringify(existing);
+    }
+  }
+
+  // ---- Reusable builder for follow-on inspection sections (global) ----
+  function addFollowOnInspectionSection({ afterSectionId, sectionId, title, questions, nextAction = null }) {
+    const afterEl = document.getElementById(afterSectionId);
+    if (!afterEl) {
+      console.error(`addFollowOnInspectionSection: '${afterSectionId}' not found`);
+      return;
+    }
+
+    const section = document.createElement('section');
+    section.id = sectionId;
+    section.style.display = 'none';
+    section.innerHTML = `
+      <h2>${title}</h2>
+      ${questions.map(q => `
+        <div class="item">
+          <label class="label-text">${q}</label>
+          <select required style="padding: 8px; width: 20%; border-radius: 5px;">
+            <option value="">-- Select --</option>
+            <option value="Pass">Pass</option>
+            <option value="Fail">Fail</option>
+          </select>
+          <textarea placeholder="Comments..." rows="2" style="width: 40%;"></textarea>
+          <input type="file" accept="image/*" capture="environment" style="display:none;" onchange="handlePhotoUpload(this)">
+          <button type="button" class="camera-icon-button" onclick="this.previousElementSibling.click()">📷</button>
+          <img class="thumbnail-preview" style="display: none;" />
+        </div>
+      `).join('')}
+      <div class="nav-buttons">
+        <button id="back_${sectionId}" type="button">Back</button>
+        <button id="continue_${sectionId}" type="button">Continue</button>
+      </div>
+    `;
+
+    // Insert right after the "after" section in the DOM
+    afterEl.insertAdjacentElement('afterend', section);
+
+    // Back -> show previous section
+    document.getElementById(`back_${sectionId}`).addEventListener('click', () => {
+      section.style.display = 'none';
+      afterEl.style.display = 'block';
+    });
+
+    // Continue -> optional nextAction (otherwise alert)
+    const continueBtn = document.getElementById(`continue_${sectionId}`);
+    continueBtn.addEventListener('click', () => {
+      if (typeof nextAction === 'function') {
+        nextAction({ current: section, previous: afterEl });
+      } else {
+        alert('Continue to next step...');
+      }
+    });
+
+    // Wire the previous section's visible Continue to open this section
+    const prevContinue =
+      document.querySelector(`#${afterSectionId} .nav-buttons button:last-child`) ||
+      (afterSectionId === 'chargePodInspectionSection'
+        ? document.getElementById('continueFromChargePodBtn')
+        : null);
+
+    if (prevContinue) {
+      prevContinue.addEventListener('click', () => {
+        afterEl.style.display = 'none';
+        section.style.display = 'block';
+      });
+    } else {
+      console.warn(`No continue button found in #${afterSectionId}. Add one or wire manually.`);
+    }
+
+    return section;
+  }
+  
+// ---- Collect all form answers across sections (with photos) ----
+function collectFormData() {
+  const entries = [];
+
+  document.querySelectorAll('section[id]').forEach(sec => {
+    const sectionTitle = (sec.querySelector('h2')?.textContent || sec.id).trim();
+
+    // Work row-by-row to attach photos to the correct row
+    sec.querySelectorAll('.item').forEach(item => {
+      // Photos captured on this row
+      let photos = [];
+      if (item.dataset.photos) {
+        try { photos = JSON.parse(item.dataset.photos) || []; } catch { photos = []; }
+      }
+
+      const controls = Array.from(item.querySelectorAll('input, select, textarea'));
+
+      // If a row only has photos, create a synthetic entry
+      if (controls.length === 0 && photos.length) {
+        entries.push({
+          section: sectionTitle,
+          label: item.querySelector('.label-text')?.textContent.trim() || 'Photos',
+          value: '',
+          photos
+        });
+        return;
+      }
+
+      // Normal rows
+      controls.forEach((el, idx) => {
+        const type = (el.type || '').toLowerCase();
+        if (type === 'file') return; // files handled via handlePhotoUpload
+
+        let value = '';
+        if (type === 'checkbox') value = el.checked ? 'Yes' : 'No';
+        else if (type === 'radio') { if (!el.checked) return; value = el.value ?? ''; }
+        else value = (el.value ?? '').trim();
+
+        // Resolve label
+        let label = '';
+        if (el.id) {
+          const lab = item.querySelector(`label[for="${el.id}"]`) || sec.querySelector(`label[for="${el.id}"]`);
+          if (lab) label = lab.textContent.trim();
+        }
+        if (!label) label = item.querySelector('.label-text')?.textContent.trim() || (el.name || el.id || '(unnamed)');
+
+        const entry = { section: sectionTitle, label, value };
+        // Attach photos once per row to the first field
+        if (idx === 0 && photos.length) entry.photos = photos;
+
+        entries.push(entry);
+      });
+    });
+  });
+
+  return { generatedAt: new Date().toISOString(), entries };
+}
+
+
+
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const addBtn = document.getElementById("addBtn");
+    const removeBtn = document.getElementById("removeBtn");
+    const nextBtn = document.getElementById("nextBtn");
+    const backBtn = document.getElementById("backBtn");
+    const backToPreChecksBtn = document.getElementById("backToPreChecksBtn");
+    const continueFromPreChecksBtn = document.getElementById("continueFromPreChecksBtn");
+    const continueFromIncomingSupplyBtn = document.getElementById("continueFromIncomingSupplyBtn");
+    const backToIncomingSupplyBtn = document.getElementById("backToIncomingSupplyBtn");
+    const backToTransformerBtn = document.getElementById("backToTransformerBtn");
+    const backToPreChecksFinalBtn = document.getElementById("backToPreChecksFinalBtn");
+    backBtn.addEventListener('click', () => {
+  document.getElementById('preChecksSection').style.display = 'none';
+  document.getElementById('testEquipmentSection').style.display = 'block';
+});
+
+
+    // Foundation -> Charge Pod
+    document.querySelector('#foundationInstallChecksSection .nav-buttons button:last-child').addEventListener("click", () => {
+      document.getElementById("foundationInstallChecksSection").style.display = "none";
+      document.getElementById("chargePodInspectionSection").style.display = "block";
+    });
+    document.getElementById("backToFoundationBtn").addEventListener("click", () => {
+      document.getElementById("chargePodInspectionSection").style.display = "none";
+      document.getElementById("foundationInstallChecksSection").style.display = "block";
+    });
+
+    // Pre-Checks Final -> Foundation
+    document.querySelector('#preChecksFinalSection .nav-buttons button:last-child').addEventListener("click", () => {
+      document.getElementById("preChecksFinalSection").style.display = "none";
+      document.getElementById("foundationInstallChecksSection").style.display = "block";
+    });
+    backToPreChecksFinalBtn.addEventListener("click", () => {
+      document.getElementById("foundationInstallChecksSection").style.display = "none";
+      document.getElementById("preChecksFinalSection").style.display = "block";
+    });
+
+    // Incoming Supply <-> Transformer
+    continueFromIncomingSupplyBtn.addEventListener("click", () => {
+      document.getElementById("incomingSupplySection").style.display = "none";
+      document.getElementById("transformerDetailsSection").style.display = "block";
+    });
+    backToIncomingSupplyBtn.addEventListener("click", () => {
+      document.getElementById("transformerDetailsSection").style.display = "none";
+      document.getElementById("incomingSupplySection").style.display = "block";
+    });
+
+    // Transformer -> Pre-Checks Final
+    document.querySelector('#transformerDetailsSection .nav-buttons button:last-child').addEventListener("click", () => {
+      document.getElementById("transformerDetailsSection").style.display = "none";
+      document.getElementById("preChecksFinalSection").style.display = "block";
+    });
+    backToTransformerBtn.addEventListener("click", () => {
+      document.getElementById("preChecksFinalSection").style.display = "none";
+      document.getElementById("transformerDetailsSection").style.display = "block";
+    });
+
+    // Pre-Checks -> Incoming Supply
+    continueFromPreChecksBtn.addEventListener("click", () => {
+      document.getElementById("preChecksSection").style.display = "none";
+      document.getElementById("incomingSupplySection").style.display = "block";
+    });
+    backToPreChecksBtn.addEventListener("click", () => {
+      document.getElementById("incomingSupplySection").style.display = "none";
+      document.getElementById("preChecksSection").style.display = "block";
+    });
+
+    // Charge Pod -> Pod Section 1
+    document.getElementById('continueFromChargePodBtn').addEventListener('click', () => {
+      document.getElementById('chargePodInspectionSection').style.display = 'none';
+      document.getElementById('podSection1InspectionSection').style.display = 'block';
+    });
+    // Back Pod Section 1 -> Charge Pod
+    document.getElementById("backToChargePodBtn").addEventListener("click", () => {
+      document.getElementById("podSection1InspectionSection").style.display = "none";
+      document.getElementById("chargePodInspectionSection").style.display = "block";
+    });
+
+    // Test Equipment section logic
+    const testSection = document.getElementById("testEquipmentSection");
+    function allFieldsFilled() {
+      const inputs = testSection.querySelectorAll(".equipmentForm input");
+      return Array.from(inputs).every(input => input.value.trim() !== "");
+    }
+    function warnIfIncomplete() {
+      if (!allFieldsFilled()) {
+        alert("Please fill in all fields before continuing.");
+        return false;
+      }
+      return true;
+    }
+    addBtn.addEventListener("click", () => {
+      if (!warnIfIncomplete()) return;
+      const forms = document.querySelectorAll(".equipmentForm");
+      const originalForm = forms[forms.length - 1];
+      const clone = originalForm.cloneNode(true);
+      clone.querySelectorAll("input").forEach(input => input.value = "");
+      const navButtons = testSection.querySelector(".nav-buttons");
+      testSection.insertBefore(clone, navButtons);
+    });
+    removeBtn.addEventListener("click", () => {
+      if (!warnIfIncomplete()) return;
+      const forms = document.querySelectorAll(".equipmentForm");
+      if (forms.length > 1) {
+        forms[forms.length - 1].remove();
+      } else {
+        alert("At least one equipment record must remain.");
+      }
+    });
+    nextBtn.addEventListener("click", () => {
+      if (!warnIfIncomplete()) return;
+      document.getElementById("testEquipmentSection").style.display = "none";
+      document.getElementById("preChecksSection").style.display = "block";
+    });
+
+    // ---- Create Pod – Section 2 (chains from Section 1) ----
+    addFollowOnInspectionSection({
+      afterSectionId: 'podSection1InspectionSection',
+      sectionId: 'podSection2InspectionSection',
+      title: 'Pod – Section 2 Visual Inspections',
+      questions: [
+        'Visual inspection of DC busbar connection witness marks, ensure no movement has occurred during transit.',
+        'Visual inspection of Power Module connectors, ensure connectors are mated correctly after transit.',
+        'Ensure fan thermostats are set to 25°C.',
+        'Visual inspection of Network Compartments, ensure D-Type connectors and mini-fit connectors are seated correctly.',
+        'Visual inspection of 1000V Contactor compartments, ensure D-Type, mini-fit and faston connections are seated correctly.',
+        'Ensure heater Control is set to 75%'
+      ]
+    });
+
+    // ---- Create Pod – Section 3 (chains from Section 2) ----
+    addFollowOnInspectionSection({
+      afterSectionId: 'podSection2InspectionSection',
+      sectionId: 'podSection3InspectionSection',
+      title: 'Pod – Section 3 Visual Inspections',
+      questions: [
+        'Visual inspection of DC busbar connection witness marks, ensure no movement has occurred during transit.',
+       
+      ]
+    });
+    // ---- Create Pod – Section 4 (chains from Section 3) ----
+    addFollowOnInspectionSection({
+      afterSectionId: 'podSection3InspectionSection',
+      sectionId: 'podSection4InspectionSection',
+      title: 'Pod – Section 4 Visual Inspections',
+      questions: [
+        'Visual inspection of DC busbar connection witness marks, ensure no movement has occurred during transit.',
+        
+      ]
+    });
+     // ---- Create Pod – Section 5 (chains from Section 4) ----
+    addFollowOnInspectionSection({
+      afterSectionId: 'podSection4InspectionSection',
+      sectionId: 'podSection5InspectionSection',
+      title: 'Pod – Section 5 Visual Inspections',
+      questions: [
+        'Visual inspection of DC busbar connection witness marks, ensure no movement has occurred during transit.',
+        'Visual inspection of PC & vSECC Compartment, ensure D-Type connectors, ethernet connections, fuse holders are inserted, vSECC connectors are seated correctly and mini-fit connectors are seated correctly.',
+        'Ensure PC connections are correct and seated correctly.',
+        'Visual inspection of 1000V Outgoing Compartment, ensure D-Type connectors, mini-fit and faston connectors are seated correctly.'
+      
+      ]
+    });
+// ---- Charge Points (chains from Section 5) ----å
+const cpSection = addFollowOnInspectionSection({
+  afterSectionId: 'podSection5InspectionSection',
+  sectionId: 'CPInspectionSection',
+  title: 'Charge Points',
+  questions: [
+    'Charge Point A',
+    'Charge Point B',
+    'Charge Point C',
+    'Charge Point D',
+    'Charge Point E',
+    'Charge Point F'
+  ]
+});
+
+// ---- Chiller Unit (chains from Charge Points) ----
+const handoverSection = addFollowOnInspectionSection({
+  afterSectionId: 'CPInspectionSection',
+  sectionId: 'handoverSignoffSection',
+  title: 'Chiller Unit Visual Inspection',
+  questions: [
+    'Is there any damage to the exterior panels of the Chiller Unit.',
+    'Ensure all door seals are intact and free from damage.',
+    'Ensure pipes are secure and free from damage wiht no leaks.',
+    'Check coolant levels.',
+    
+  ]
+});
+// ---- Create Live Tests (chains from Handover) ----
+const liveTestsSection = addFollowOnInspectionSection({
+  afterSectionId: 'handoverSignoffSection',
+  sectionId: 'liveTestsSection',
+  title: 'Live Checks',
+  questions: [
+    'Section1 - Check phase voltage at MCB6 & MCB7 are 400V AC +/- 20V.',
+    'Section1 - Check line voltage at MCB1 is 230V AC +/- 20V.',
+    'Section1 - Turn ON MCB1, MCB2, MCB3 & RCD1 confirm PSU3 & PSU4 energise. Confirm 24V DC +/- 0.5V on both PSU outputs.',
+    'Section1 - Turn ON MCB4 check voltage at transformer TA1 is 110v AC.',
+    'Section1 - Turn ON MCB6 & MCB7 confirm PSU1 & PSU2 energise. Confirm 24V DC +/- 0.5V on both PSU outputs.',
+    'Section2/3/4 - Energise each power module by turning on each MCB, ensure each power module powers on, ensure each power module in in SLP mode.',
+    'Section2/3/4 - Turn each fan thermostat to 0°C and ensure each fan runs. After check turn thermostat back to 25°C.',
+    'Section2/3/4 - Ensure heater controls is set to 75%.',
+    'Section2/3/4/5 - Ensure control boards are powered on.',
+    'Section5 - Ensure vSECCs and PC are powered on.'
+
+  ]
+  
+});
+
+// --- Add Submit button (with logging + photo support) ---
+if (liveTestsSection) {
+  const nav = liveTestsSection.querySelector('.nav-buttons');
+  if (nav) {
+    const submitBtn = document.createElement('button');
+    submitBtn.type = 'button';
+    submitBtn.textContent = 'Submit';
+
+    submitBtn.addEventListener('click', () => {
+      const data = collectFormData();
+
+      // Debug summary in the console
+      const photoCount = (data.entries || []).reduce(
+        (n, e) => n + (Array.isArray(e.photos) ? e.photos.length : 0),
+        0
+      );
+      const json = JSON.stringify(data);
+      const approxBytes = new Blob([json]).size;
+
+      console.log(
+        '[Commissioning] entries:', data.entries?.length || 0,
+        '| photos:', photoCount,
+        '| payload:', (approxBytes / 1024).toFixed(1), 'KB'
+      );
+
+      try {
+        sessionStorage.setItem('commissioningData', json);
+      } catch (err) {
+        alert('Report is too large for this tab (session storage limit). Try fewer or smaller photos.');
+        console.error('sessionStorage setItem failed:', err);
+        return;
+      }
+
+      // Navigate to submit page
+      window.location.href = './submit.html';
+    });
+
+    nav.appendChild(submitBtn);
+  }
+}
+
+
+
+
+
+
+
+
+// Optional descriptions
+if (cpSection) {
+  const desc = document.createElement('p');
+  desc.className = 'section-desc';
+  desc.textContent =
+    'Visual inspection of DC+/DC-/PE busbar connection witness marks, ensure control cables are terminated correctly. ' +
+    'Inspect cooling pipes for damage and loose connections. Ensure CP is fixed to the floor and level. ' +
+    'Check dispensing cable for damage and check connector head for damage or pushed back pins.';
+  const h2 = cpSection.querySelector('h2');
+  if (h2) h2.insertAdjacentElement('afterend', desc);
+}
+
+if (handoverSection) {
+  const p = document.createElement('p');
+  p.className = 'section-desc';
+  p.textContent = '';
+  const h2 = handoverSection.querySelector('h2');
+  if (h2) h2.insertAdjacentElement('afterend', p);
+}
+
+});
+
+
+
+
+      
+  
+
+</script>
+<script>
+// === Quick Nav (buttons only appear after pressing "Quick Nav") ===
+// Paste this AFTER your existing main script (so sections already exist).
+
+(function () {
+  const IDS_IN_ORDER = [
+    'testEquipmentSection',
+    'preChecksSection',
+    'incomingSupplySection',
+    'transformerDetailsSection',
+    'preChecksFinalSection',
+    'foundationInstallChecksSection',
+    'chargePodInspectionSection',
+    'podSection1InspectionSection',
+    'podSection2InspectionSection',
+    'podSection3InspectionSection',
+    'podSection4InspectionSection',
+    'podSection5InspectionSection',
+    'CPInspectionSection'
+  ];
+
+  const LABELS = {
+    testEquipmentSection: 'Test Equipment',
+    preChecksSection: 'Pre-Checks (Systems)',
+    incomingSupplySection: 'Incoming Supply',
+    transformerDetailsSection: 'Transformer',
+    preChecksFinalSection: 'Pre-Checks (Final)',
+    foundationInstallChecksSection: 'Foundation Checks',
+    chargePodInspectionSection: 'Charge Pod',
+    podSection1InspectionSection: 'Pod – Section 1',
+    podSection2InspectionSection: 'Pod – Section 2',
+    podSection3InspectionSection: 'Pod – Section 3',
+    podSection4InspectionSection: 'Pod – Section 4',
+    podSection5InspectionSection: 'Pod – Section 5',
+    CPInspectionSection: 'Charge Points'
+  };
+
+  let added = new Set();
+
+  function ensureNav() {
+    let nav = document.getElementById('quickNav');
+    if (nav) return nav;
+
+    nav = document.createElement('div');
+    nav.id = 'quickNav';
+    nav.className = 'quick-nav'; // rely on script to hide/show buttons
+
+    nav.innerHTML = `
+      <button class="toggle" type="button" title="Show/Hide sections">Quick Nav ▾</button>
+      <div class="body" role="menu"></div>
+    `;
+
+    document.body.appendChild(nav);
+
+    // Hide options by default (only "Quick Nav" text/button shows)
+    const body = nav.querySelector('.body');
+    body.style.display = 'none';
+
+    const toggleBtn = nav.querySelector('.toggle');
+    toggleBtn.addEventListener('click', () => {
+      const isHidden = body.style.display === 'none';
+      body.style.display = isHidden ? 'block' : 'none';
+      toggleBtn.textContent = isHidden ? 'Quick Nav ▴' : 'Quick Nav ▾';
+    });
+
+    return nav;
+  }
+
+  function sectionLabel(sec) {
+    return LABELS[sec.id] || (sec.querySelector('h2')?.textContent.trim() || sec.id);
+  }
+
+  function showSection(id) {
+    document.querySelectorAll('section[id]').forEach(sec => {
+      sec.style.display = (sec.id === id) ? 'block' : 'none';
+    });
+    setActive(id);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function setActive(id) {
+    const nav = ensureNav();
+    nav.querySelectorAll('.body button[data-target]').forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.target === id);
+    });
+  }
+
+  function addButtonForSection(sec) {
+    const nav = ensureNav();
+    const body = nav.querySelector('.body');
+    if (!sec.id || added.has(sec.id)) return;
+
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.dataset.target = sec.id;
+    btn.textContent = sectionLabel(sec);
+    btn.addEventListener('click', () => showSection(sec.id));
+    body.appendChild(btn);
+
+    added.add(sec.id);
+  }
+
+  function rebuildNav() {
+    const nav = ensureNav();
+    const body = nav.querySelector('.body');
+    added.clear();
+    body.innerHTML = '';
+
+    const seen = new Set();
+
+    IDS_IN_ORDER.forEach(id => {
+      const sec = document.getElementById(id);
+      if (sec) {
+        addButtonForSection(sec);
+        seen.add(id);
+      }
+    });
+
+    document.querySelectorAll('section[id]').forEach(sec => {
+      if (!seen.has(sec.id)) addButtonForSection(sec);
+    });
+
+    const current = Array.from(document.querySelectorAll('section[id]'))
+      .find(s => getComputedStyle(s).display !== 'none');
+    if (current) setActive(current.id);
+  }
+
+  function initObserver() {
+    const obs = new MutationObserver(muts => {
+      let needsRebuild = false;
+      muts.forEach(m => {
+        m.addedNodes.forEach(n => {
+          if (n.nodeType === 1 && n.tagName === 'SECTION' && n.id) needsRebuild = true;
+        });
+      });
+      if (needsRebuild) rebuildNav();
+    });
+    obs.observe(document.body, { childList: true, subtree: true });
+  }
+
+  function boot() {
+    rebuildNav();
+    initObserver();
+
+    // Keep active state in sync when your existing Next/Back buttons toggle sections
+    document.addEventListener('click', () => {
+      queueMicrotask(() => {
+        const current = Array.from(document.querySelectorAll('section[id]'))
+          .find(s => getComputedStyle(s).display !== 'none');
+        if (current) setActive(current.id);
+      });
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => setTimeout(boot, 0));
+  } else {
+    setTimeout(boot, 0);
+  }
+
+  // Optional: expose for console use
+  window.showSection = showSection;
+})();
+</script>
+
+
+
+
+

@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Voltempo Commissioning Checklist</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --navy: #0d223f;
+      --navy-2: #142d53;
+      --teal: #00c4d6;
+      --green: #26d37b;
+      --white: #ffffff;
+      --red: #d64a4a;
+    }
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: var(--navy);
+      color: var(--white);
+      padding: 40px 20px;
+    }
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 30px;
+    }
+    h2 {
+      font-size: 1.25rem;
+      color: var(--teal);
+      margin-bottom: 10px;
+    }
+    section {
+      margin-bottom: 35px;
+      padding: 20px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--navy-2);
+      border-radius: 8px;
+      display: none;
+    }
+    section.visible {
+      display: block;
+    }
+    section.thankyou-step.visible {
+  display: block;
+}
+    section.thankyou-step {
+  display: none;
+}
+    .item {
+      margin-bottom: 10px;
+    }
+    .label-text {
+      display: inline-block;
+      width: 300px;
+    }
+    .options label {
+      margin-right: 15px;
+      cursor: pointer;
+    }
+    input[type="radio"] {
+      transform: scale(1.2);
+      margin-right: 5px;
+    }
+    button {
+      margin-top: 15px;
+      padding: 10px 22px;
+      border: none;
+      border-radius: 30px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      color: var(--white);
+      background: linear-gradient(135deg, var(--teal), var(--green));
+      cursor: pointer;
+    }
+    .nav-buttons {
+      display: flex;
+      justify-content: space-between;
+    }
+  </style>
+</head>
+<body>
+
+<div style="text-align: center; margin-bottom: 30px;">
+  <img src="https://voltempo.com/wp-content/uploads/2024/12/logo-svg-2048x508.png" alt="Voltempo Logo" style="max-width: 100%; height: auto; max-height: 100px;">
+  <h2 style="color: var(--white); margin-top: 10px;">Megawatt Charger – Commissioning Checklist</h2>
+    <h4 style="color: var(--blue); margin-top: 10px;">Demonstration Purposes Only</h4>
+
+</div>
+<div id="projectOverlay" style="
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  color: rgba(255,255,255,0.5);
+  font-size: 0.7rem;
+  line-height: 1.4;
+  z-index: 9999;
+  display: none;
+  pointer-events: none;
+"></div>
+
+<form id="checklistForm">
+
+<input id="cameraInput"
+       type="file"
+       accept="image/*"
+       capture="environment"
+       style="display:none">
+
+<input id="scheduleInput"
+       type="file"
+       accept=".pdf,image/*"
+       style="display:none">
+       <!-- Project Info Section -->
+<section id="projectInfo" class="visible">
+  <h2>Project Information</h2>
+  <div class="item">
+    <label class="label-text" for="customerName">Customer:</label>
+    <input type="text" id="customerName" name="customerName" required style="padding: 8px; width: 60%;">
+  </div>
+  <div class="item">
+    <label class="label-text" for="siteID">Site ID:</label>
+    <input type="text" id="siteID" name="siteID" required style="padding: 8px; width: 60%;">
+  </div>
+  <div class="item">
+    <label class="label-text" for="dno">DNO:</label>
+    <input type="text" id="dno" name="dno" required style="padding: 8px; width: 60%;">
+  </div>
+  <div class="item">
+    <label class="label-text" for="engineerName">Engineer:</label>
+    <input type="text" id="engineerName" name="engineerName" required style="padding: 8px; width: 60%;">
+  </div>
+
+  <div class="nav-buttons">
+    <div></div>
+    <button id="startBtn" type="button">Start Checklist ▸</button>
+  </div>
+</section>
+<!-- Step 1 -->
+<section id="step1">
+  <h2>1. Pre-Commissioning Checks</h2>
+  <div class="item"><span class="label-text">Risk assessment completed</span><span class="options"><label><input type="radio" name="risk" value="yes">✔</label><label><input type="radio" name="risk" value="no">✖</label></span></div>
+  <div class="item"><span class="label-text">Site plans reviewed</span><span class="options"><label><input type="radio" name="plans" value="yes">✔</label><label><input type="radio" name="plans" value="no">✖</label></span></div>
+  <div class="item"><span class="label-text">Design confirmed on-site</span><span class="options"><label><input type="radio" name="design" value="yes">✔</label><label><input type="radio" name="design" value="no">✖</label></span></div>
+  <div class="item"><span class="label-text">Environment acceptable</span><span class="options"><label><input type="radio" name="env" value="yes">✔</label><label><input type="radio" name="env" value="no">✖</label></span></div>
+  <div class="item"><span class="label-text">Access confirmed</span><span class="options"><label><input type="radio" name="access" value="yes">✔</label><label><input type="radio" name="access" value="no">✖</label></span></div>
+  <div class="item"><span class="label-text">Supply connected</span><span class="options"><label><input type="radio" name="supply" value="yes">✔</label><label><input type="radio" name="supply" value="no">✖</label></span></div>
+
+  <!-- Take Photo Button -->
+  <div style="margin-top: 20px;">
+    <button type="button" onclick="takePhoto()">📷 Take Photo</button>
+  </div>
+
+  <div class="nav-buttons"><div></div><button id="nextBtn1" type="button">Next ▸ Testing & Energisation</button></div>
+</section>
+
+<!-- Step 2 -->
+<section id="step2">
+  <h2>2. Testing & Energisation</h2>
+  <div class="item"><span class="label-text">Polarity confirmed</span><span class="options"><label><input type="radio" name="polarity" value="yes">✔</label><label><input type="radio" name="polarity" value="no">✖</label></span></div>
+  <div class="item"><span class="label-text">415V 3-Phase Supply Present</span><span class="options"><label><input type="radio" name="voltage" value="yes">✔</label><label><input type="radio" name="voltage" value="no">✖</label></span></div>
+  <div class="item"><span class="label-text">Continuity of CPCs & conductors</span><span class="options"><label><input type="radio" name="continuity" value="yes">✔</label><label><input type="radio" name="continuity" value="no">✖</label></span></div>
+  <div class="item"><span class="label-text">Insulation Resistance Passed</span><span class="options"><label><input type="radio" name="ir" value="yes">✔</label><label><input type="radio" name="ir" value="no">✖</label></span></div>
+  <div class="item"><span class="label-text">Earth Loop Impedance (Zs)</span><span class="options"><label><input type="radio" name="zs" value="yes">✔</label><label><input type="radio" name="zs" value="no">✖</label></span></div>
+  <div class="item"><span class="label-text">RCD Trip Times Verified</span><span class="options"><label><input type="radio" name="rcd" value="yes">✔</label><label><input type="radio" name="rcd" value="no">✖</label></span></div>
+
+  <!-- Upload Schedule Button -->
+  <div style="margin-top: 20px;">
+    <button type="button" onclick="uploadSchedule()">📄 Upload Schedule of Tests</button>
+  </div>
+
+  <div class="nav-buttons">
+    <button id="backBtn2" type="button">◂ Back</button>
+    <button id="nextBtn2" type="button">Next ▸ Configuration</button>
+  </div>
+</section>
+
+
+
+<!-- Step 3 -->
+<section id="step3">
+  <h2>3. Configuration</h2>
+  <div class="item"><span class="label-text">Communication with backend established</span><span class="options"><label><input type="radio" name="comm" value="yes">✔</label><label><input type="radio" name="comm" value="no">✖</label></span></div>
+  <div class="item"><span class="label-text">Telemetry, diagnostics & monitoring verified</span><span class="options"><label><input type="radio" name="telemetry" value="yes">✔</label><label><input type="radio" name="telemetry" value="no">✖</label></span></div>
+
+  <!-- Comms Check Button + Result -->
+  <div style="margin-top: 20px;">
+    <button type="button" onclick="runCommsCheck()">📶 Comms Check</button>
+    <div id="commsResult" style="margin-top: 10px; font-weight: 600;"></div>
+  </div>
+
+  <div class="nav-buttons">
+    <button id="backBtn3" type="button">◂ Back</button>
+    <button id="nextBtn3" type="button">Next ▸ Functional Testing</button>
+  </div>
+</section>
+
+
+
+<!-- Step 4 -->
+<section id="step4">
+  <h2>4. Functional Testing</h2>
+  <div class="item"><span class="label-text">Charger initiates charging session</span><span class="options"><label><input type="radio" name="initiate" value="yes">✔</label><label><input type="radio" name="initiate" value="no">✖</label></span></div>
+  <div class="item"><span class="label-text">All charging cables checked and verified</span><span class="options"><label><input type="radio" name="cables" value="yes">✔</label><label><input type="radio" name="cables" value="no">✖</label></span></div>
+  <div class="item"><span class="label-text">Charger ends session correctly</span><span class="options"><label><input type="radio" name="endsession" value="yes">✔</label><label><input type="radio" name="endsession" value="no">✖</label></span></div>
+  <div class="item"><span class="label-text">Emergency shut-off devices function correctly</span><span class="options"><label><input type="radio" name="esd" value="yes">✔</label><label><input type="radio" name="esd" value="no">✖</label></span></div>
+
+  <!-- Take Photo Button -->
+  <div style="margin-top: 20px;">
+    <button type="button" onclick="takePhoto()">📷 Take Photo</button>
+  </div>
+
+  <div class="nav-buttons">
+    <button id="backBtn4" type="button">◂ Back</button>
+    <button id="nextBtn4" type="button">Next ▸ Handover & Documentation</button>
+  </div>
+</section>
+
+  <!-- Step 5 -->
+  <section id="step5">
+    <h2>5. Handover & Documentation</h2>
+    <div class="item"><span class="label-text">Handover pack completed</span><span class="options"><label><input type="radio" name="handover" value="yes">✔</label><label><input type="radio" name="handover" value="no">✖</label></span></div>
+    <div class="item"><span class="label-text">As-fitted drawings included</span><span class="options"><label><input type="radio" name="drawings" value="yes">✔</label><label><input type="radio" name="drawings" value="no">✖</label></span></div>
+    <div class="item"><span class="label-text">O&M manual uploaded</span><span class="options"><label><input type="radio" name="manual" value="yes">✔</label><label><input type="radio" name="manual" value="no">✖</label></span></div>
+    <div class="item"><span class="label-text">Customer training delivered</span><span class="options"><label><input type="radio" name="training" value="yes">✔</label><label><input type="radio" name="training" value="no">✖</label></span></div>
+    <div class="nav-buttons"><button id="backBtn5" type="button">◂ Back</button><button id="nextBtn5" type="button">Next ▸ Final Sign-Off</button></div>
+  </section>
+
+  <!-- Step 6 -->
+<section id="step6">
+  <h2>6. Final Sign-Off</h2>
+  <div class="item"><span class="label-text">Final inspection passed</span><span class="options"><label><input type="radio" name="inspection" value="yes">✔</label><label><input type="radio" name="inspection" value="no">✖</label></span></div>
+  <div class="item"><span class="label-text">Customer sign-off obtained</span><span class="options"><label><input type="radio" name="signoff" value="yes">✔</label><label><input type="radio" name="signoff" value="no">✖</label></span></div>
+  <div class="item"><span class="label-text">Completion photos uploaded</span><span class="options"><label><input type="radio" name="photos" value="yes">✔</label><label><input type="radio" name="photos" value="no">✖</label></span></div>
+  <div class="item"><span class="label-text">System left in operational state</span><span class="options"><label><input type="radio" name="operational" value="yes">✔</label><label><input type="radio" name="operational" value="no">✖</label></span></div>
+
+  <!-- Take Photo Button -->
+  <div style="margin-top: 20px;">
+    <button type="button" onclick="takePhoto()">📷 Take Photo</button>
+  </div>
+
+  <div class="nav-buttons">
+    <button id="backBtn6" type="button">◂ Back</button>
+    <button id="submitBtn" type="button" onclick="goToFinalConfirm()">Submit Checklist</button>
+
+
+  <  </div>                 <!-- nav-buttons CLOSES -->
+
+</section>              <!-- ✅ this closes Step-6 properly -->
+
+
+<!-- Confirmation Section (top-level, not inside Step-6) -->
+<section id="finalConfirm" class="confirm-step">
+  <h2>Confirm Submission</h2>
+
+  <div class="item">
+    <label class="label-text" for="fullName">Full Name:</label>
+    <input type="text" id="fullName" name="fullName" required
+           style="padding:8px; width:60%;">
+  </div>
+
+  <div class="item">
+    <label class="label-text" for="submissionDate">Date:</label>
+    <input type="date" id="submissionDate" name="submissionDate" required
+           style="padding:8px;">
+  </div>
+
+  <div class="item">
+    <label class="label-text" for="notes">Notes:</label><br>
+    <textarea id="notes" name="notes" rows="4"
+              style="width:90%; padding:10px;"></textarea>
+  </div>
+
+  <div class="nav-buttons">
+    <button id="backBtnFinal" type="button">◂ Back</button>
+    <button type="button" onclick="handleSubmit()">Submit Checklist</button>
+
+  </div>
+</section>
+
+<!-- Thank You Screen -->
+<section id="thankYou" class="thankyou-step">
+  <h2 style="color: var(--green); margin-bottom: 20px;">✅ Thank you for submitting!</h2>
+   <button type="button" onclick="generatePDF()">Download PDF Report</button>
+  <button type="button" onclick="resetForm()">Submit Another Form</button>
+</section>
+</form>
+
+<script>
+/* ---------- Validate Section ---------- */
+function validateSection(sectionId) {
+  const section = document.getElementById(sectionId);
+  const inputs  = section.querySelectorAll("input[type='radio']");
+  const grouped = {};
+  const flagged = [];
+
+  inputs.forEach(input => {
+    (grouped[input.name] = grouped[input.name] || []).push(input);
+  });
+
+  for (let group in grouped) {
+    const selected = grouped[group].find(i => i.checked);
+    if (!selected) {
+      alert("Please answer all questions in this section before continuing.");
+      return false;
+    }
+    if (selected.value === "no") {
+      flagged.push(group);
+    }
+  }
+
+  if (flagged.length) {
+    alert("One or more items are ✖. Document the reason or resolve before proceeding.");
+    return false;
+  }
+  return true;
+}
+
+/* ---------- Navigation Buttons ---------- */
+const nav = [
+  ['nextBtn1','step1','step2'], ['backBtn2','step2','step1'],
+  ['nextBtn2','step2','step3'], ['backBtn3','step3','step2'],
+  ['nextBtn3','step3','step4'], ['backBtn4','step4','step3'],
+  ['nextBtn4','step4','step5'], ['backBtn5','step5','step4'],
+  ['nextBtn5','step5','step6'], ['backBtn6','step6','step5']
+];
+
+nav.forEach(([btn, from, to]) => {
+  const el = document.getElementById(btn);
+  if (!el) return;
+  el.addEventListener('click', () => {
+    if (btn.startsWith('next') && !validateSection(from)) return;
+    document.getElementById(from).classList.remove('visible');
+    document.getElementById(to).classList.add('visible');
+    document.getElementById(to).scrollIntoView({ behavior:'smooth' });
+  });
+});
+
+/* ---------- Start Checklist ---------- */
+document.getElementById('startBtn').addEventListener('click', () => {
+  const customer = document.getElementById('customerName').value.trim();
+  const siteID = document.getElementById('siteID').value.trim();
+  const dno = document.getElementById('dno').value.trim();
+  const engineer = document.getElementById('engineerName').value.trim();
+
+  if (!customer || !siteID || !dno || !engineer) {
+    alert("Please complete all Project Information fields before continuing.");
+    return;
+  }
+
+  const overlay = document.getElementById('projectOverlay');
+  overlay.innerHTML = `
+    <strong>Customer:</strong> ${customer}<br>
+    <strong>Site ID:</strong> ${siteID}<br>
+    <strong>DNO:</strong> ${dno}<br>
+    <strong>Engineer:</strong> ${engineer}
+  `;
+  overlay.style.display = 'block';
+
+  document.getElementById('projectInfo').classList.remove("visible");
+  const step1 = document.getElementById('step1');
+  step1.classList.add("visible");
+  step1.scrollIntoView({ behavior: "smooth" });
+});
+
+/* ---------- Go to Final Confirmation ---------- */
+function goToFinalConfirm() {
+  if (!validateSection('step6')) return;
+
+  document.getElementById('step6').classList.remove('visible');
+  document.getElementById('finalConfirm').classList.add('visible');
+  document.getElementById('finalConfirm').scrollIntoView({ behavior: 'smooth' });
+}
+
+/* ---------- Final Submission ---------- */
+function handleSubmit() {
+  const name = document.getElementById('fullName').value.trim();
+  const date = document.getElementById('submissionDate').value.trim();
+  if (!name || !date) {
+    alert('Please enter your name and confirm the date before submitting.');
+    return;
+  }
+
+  document.querySelectorAll('section').forEach(sec => sec.classList.remove('visible'));
+  document.getElementById('thankYou').classList.add('visible');
+  document.getElementById('thankYou').scrollIntoView({ behavior:'smooth' });
+}
+
+/* ---------- Placeholder: Photo, Upload, PDF ---------- */
+function takePhoto() {
+  document.getElementById('cameraInput').click();
+}
+
+function uploadSchedule() {
+  document.getElementById('scheduleInput').click();
+}
+function takePhoto() {
+  document.getElementById('cameraInput').click();
+}
+
+function uploadSchedule() {
+  document.getElementById('scheduleInput').click();
+}
+
+/* ---------- Comms Check ---------- */
+function runCommsCheck() {
+  const resultDiv = document.getElementById("commsResult");
+  resultDiv.textContent = "Running Comms Check…";
+  resultDiv.style.color = "rgb(0,196,214)";   // teal
+
+  let progress = 0;
+  const timer = setInterval(() => {
+    progress += 10;
+    resultDiv.textContent = `Comms Check in progress: ${progress}%`;
+
+    if (progress >= 100) {
+      clearInterval(timer);
+      setTimeout(() => {
+        resultDiv.textContent = "✅ Comms Check Successful";
+        resultDiv.style.color = "rgb(38,211,123)"; // green
+      }, 400);
+    }
+  }, 150);
+}
+
+/* ---------- PDF generator ---------- */
+async function generatePDF() { /* … your existing code … */ }
+
+async function generatePDF() {
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF();
+
+  const fontSize = 11;
+  const lineHeight = 7;
+  let y = 20;
+
+  // Colors
+  const navy = [13, 34, 63];
+  const teal = [0, 196, 214];
+  const green = [38, 211, 123];
+
+  doc.setFont("helvetica", "bold");
+  doc.setFontSize(16);
+  doc.setTextColor(teal[0], teal[1], teal[2]);
+  doc.text("Voltempo – Megawatt Charger Checklist", 10, y);
+
+  y += 10;
+
+  doc.setFillColor(navy[0], navy[1], navy[2]);
+  doc.setDrawColor(teal[0], teal[1], teal[2]);
+  doc.setTextColor(255, 255, 255);
+  doc.setFontSize(12);
+  doc.rect(10, y, 190, 10, 'F');
+  doc.text("Project Details", 12, y + 7);
+
+  y += 15;
+  doc.setFontSize(fontSize);
+  doc.setFont("helvetica", "normal");
+  doc.setTextColor(0);
+
+  const customer = document.getElementById('customerName').value;
+  const siteID = document.getElementById('siteID').value;
+  const dno = document.getElementById('dno').value;
+  const engineer = document.getElementById('engineerName').value;
+
+  doc.text(`Customer: ${customer}`, 12, y); y += lineHeight;
+  doc.text(`Site ID: ${siteID}`, 12, y); y += lineHeight;
+  doc.text(`DNO: ${dno}`, 12, y); y += lineHeight;
+  doc.text(`Engineer: ${engineer}`, 12, y); y += 10;
+
+  const steps = [
+    ['step1', '1. Pre-Commissioning Checks'],
+    ['step2', '2. Testing & Energisation'],
+    ['step3', '3. Configuration'],
+    ['step4', '4. Functional Testing'],
+    ['step5', '5. Handover & Documentation'],
+    ['step6', '6. Final Sign-Off']
+  ];
+
+  for (const [stepId, title] of steps) {
+    const section = document.getElementById(stepId);
+    const items = section.querySelectorAll('.item');
+    if (!items.length) continue;
+
+    doc.setFillColor(navy[0], navy[1], navy[2]);
+    doc.setTextColor(255);
+    doc.setFont("helvetica", "bold");
+    doc.rect(10, y, 190, 8, 'F');
+    doc.text(title, 12, y + 6);
+    y += 12;
+
+    doc.setFont("helvetica", "normal");
+    doc.setTextColor(0);
+
+    for (const item of items) {
+      const label = item.querySelector('.label-text')?.innerText?.trim() || '';
+      const checked = item.querySelector("input[type='radio']:checked");
+      if (!checked) continue;
+
+      const value = checked.value === 'yes' ? '✔' : '✖';
+      const color = checked.value === 'yes' ? green : [214, 74, 74];
+
+      if (y > 275) {
+        doc.addPage();
+        y = 20;
+      }
+
+      doc.setTextColor(0);
+      doc.text(`${label}`, 12, y);
+      doc.setTextColor(color[0], color[1], color[2]);
+      doc.text(`${value}`, 190, y, { align: 'right' });
+      y += lineHeight;
+    }
+
+    y += 5;
+  }
+
+  doc.setTextColor(0);
+  doc.setFont("helvetica", "bold");
+  doc.setFontSize(12);
+  doc.text("Final Sign-Off", 12, y); y += 8;
+
+  const fullName = document.getElementById("fullName").value.trim();
+  const submissionDate = document.getElementById("submissionDate").value.trim();
+  const notes = document.getElementById("notes").value.trim();
+
+  doc.setFont("helvetica", "normal");
+  doc.setFontSize(fontSize);
+  doc.text(`Name: ${fullName}`, 12, y); y += lineHeight;
+  doc.text(`Date: ${submissionDate}`, 12, y); y += lineHeight;
+
+  if (notes) {
+    const wrapped = doc.splitTextToSize(`Notes: ${notes}`, 180);
+    doc.text(wrapped, 12, y);
+  }
+
+  doc.save(`Voltempo_Commissioning_${siteID || "Checklist"}.pdf`);
+}
+function resetForm() {
+  document.getElementById("checklistForm").reset();
+
+  // Hide thank-you
+  document.getElementById("thankYou").classList.remove("visible");
+
+  // Reset overlay and scroll
+  const overlay = document.getElementById("projectOverlay");
+  overlay.innerHTML = "";
+  overlay.style.display = "none";
+
+  // Show project info again
+  document.getElementById("projectInfo").classList.add("visible");
+  document.getElementById("projectInfo").scrollIntoView({ behavior: "smooth" });
+}
+
+</script>
+
+<!-- external jsPDF -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+</body>
+</html>
+

@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Submit Options</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --navy: #0d223f;
+      --navy-2: #142d53;
+      --teal: #00c4d6;
+      --green: #26d37b;
+      --white: #ffffff;
+      --muted: #e8eef6;
+    }
+    * { box-sizing: border-box; }
+    body { font-family: 'Poppins', sans-serif; background: var(--navy); color: var(--white); padding: 40px 20px; text-align: center; }
+    img.logo { max-height: 100px; margin-bottom: 30px; }
+    h1 { font-size: 2rem; margin-bottom: 20px; color: var(--teal); }
+    .btn {
+      display: inline-block; margin: 10px; padding: 12px 24px; border-radius: 30px; font-weight: 600; font-size: 0.95rem;
+      color: #ffffff; background: linear-gradient(135deg, var(--teal), var(--green)); border: none; cursor: pointer;
+      transition: background 0.3s, transform 0.2s, opacity 0.2s;
+    }
+    .btn:hover { opacity: 0.9; transform: scale(1.02); }
+    .stack { display: grid; gap: 12px; justify-content: center; margin-top: 10px; }
+    .row { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+    .divider { opacity: .2; border-top: 1px solid #fff; margin: 20px auto; max-width: 620px; }
+
+    .card { max-width: 1100px; margin: 0 auto; background: #0f2a4d; border: 1px solid #19355e; border-radius: 16px; padding: 20px; }
+    .headerline { display: flex; flex-direction: column; align-items: center; gap: 8px; margin-bottom: 10px; }
+    .hint { font-size: .9rem; opacity: .8; margin-top: 6px; }
+
+    /* Report preview (converted to PDF) */
+    .report { background: #fff; color: #111; border-radius: 12px; padding: 22px; margin: 18px auto 0; text-align: left; max-width: 1000px; }
+    .r-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; border-bottom: 2px solid #eee; padding-bottom: 12px; }
+    .r-head .title { font-weight: 700; font-size: 1.15rem; color: #0b2b5a; }
+    .r-head .meta { font-size: .9rem; color: #444; }
+    .r-logo { height: 42px; object-fit: contain; display: none; }
+
+    .section { margin: 18px 0 8px; page-break-inside: avoid; }
+    .section h2 { font-size: 1rem; background: var(--muted); padding: 8px 10px; border-radius: 8px; margin: 0 0 10px; color: #0b2b5a; }
+    table { width: 100%; border-collapse: collapse; font-size: .95rem; }
+    th, td { border-bottom: 1px solid #eee; padding: 8px 10px; vertical-align: top; word-break: break-word; }
+    th { width: 36%; text-align: left; color: #333; background: #fafbfd; }
+    .empty { padding: 16px; color: #666; }
+    .warn {
+      background:#ffefef; color:#900; border:1px solid #f3c0c0; padding:10px 12px; border-radius:10px; margin:10px 0; display:none;
+      max-width: 1000px; margin-left: auto; margin-right: auto; text-align: left;
+    }
+    .fineprint { margin-top: 8px; font-size:.88rem; color:#666; }
+
+    /* Photo gallery in cells */
+    .photo-wrap { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 6px; }
+    .photo { width: 120px; height: 90px; object-fit: cover; border: 1px solid #ddd; border-radius: 6px; }
+    @media print { .photo { width: 120px; height: 90px; } }
+  </style>
+</head>
+<body>
+  <img class="logo" src="https://voltempo.com/wp-content/uploads/2024/12/logo-svg-2048x508.png" alt="Voltempo Logo" />
+
+  <div class="card">
+    <div class="headerline">
+      <h1>Submit Options</h1>
+      <div class="row">
+        <button class="btn" id="backBtn">Back</button>
+        <button class="btn" id="viewBtn">View PDF</button>
+        <button class="btn" id="printBtn">Print</button>
+        <button class="btn" id="emailBtn">Email</button>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="stack">
+      <button class="btn" id="finalSubmitBtn">Submit</button>
+      <div class="hint">When you pressed <strong>Submit</strong> on the previous page, your answers (and photos) were saved. You can view/print/email the PDF here.</div>
+    </div>
+
+    <div id="missing" class="warn">
+      <strong>No commissioning data found.</strong><br/>
+      Go back to the checklist and press <em>Submit</em> again. If you did submit, make sure you’ve opened this page from the same tab (so the session data is still available).
+    </div>
+
+    <!-- Report preview -->
+    <div id="report" class="report" aria-label="Report content">
+      <div class="r-head">
+        <div>
+          <div class="title">Voltempo – Commissioning Checklist</div>
+          <div class="meta" id="metaDate">Generated: —</div>
+        </div>
+        <img id="pdfLogo" class="r-logo" alt="Logo for PDF" />
+      </div>
+      <div id="sections"></div>
+      <div class="fineprint">
+        Photos are included as thumbnails. Full-resolution images remain on the device; this report stores inline thumbnails for portability.
+      </div>
+    </div>
+  </div>
+
+  <!-- html2pdf bundle (html2canvas + jsPDF) -->
+  <script src="https://cdn.jsdelivr.net/npm/html2pdf.js@0.10.1/dist/html2pdf.bundle.min.js"></script>
+
+  <script>
+    /* ---------------- Utilities ---------------- */
+    function groupBy(arr, key) {
+      return arr.reduce((acc, item) => {
+        const k = item[key] ?? '(Unknown)';
+        (acc[k] ||= []).push(item);
+        return acc;
+      }, {});
+    }
+    function safeText(v) { if (v == null) return ''; return typeof v === 'string' ? v : String(v); }
+    function setMeta(dateIso) {
+      const el = document.getElementById('metaDate');
+      try { el.textContent = 'Generated: ' + new Date(dateIso || Date.now()).toLocaleString(); } catch { el.textContent = ''; }
+    }
+    function getCommissioningData() {
+      const raw = sessionStorage.getItem('commissioningData');
+      if (!raw) return null;
+      try { return JSON.parse(raw); } catch { return null; }
+    }
+    async function tryEmbedLogoDataURL(url) {
+      const imgEl = document.getElementById('pdfLogo');
+      if (!imgEl) return;
+      try {
+        const res = await fetch(url, { mode: 'cors' });
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        const blob = await res.blob();
+        const reader = new FileReader();
+        const asDataURL = await new Promise((resolve, reject) => {
+          reader.onload = () => resolve(reader.result);
+          reader.onerror = reject;
+          reader.readAsDataURL(blob);
+        });
+        imgEl.src = asDataURL;
+        imgEl.style.display = 'block';
+      } catch { imgEl.remove(); }
+    }
+
+    /* --------- Build the on-page report from data (with photos) --------- */
+    function buildReportView(data) {
+      const container = document.getElementById('sections');
+      container.innerHTML = '';
+      if (!data || !data.entries || !data.entries.length) {
+        container.innerHTML = '<div class="empty">No entries to display.</div>';
+        return;
+      }
+
+      const grouped = groupBy(data.entries, 'section');
+      Object.keys(grouped).forEach(secName => {
+        const sec = document.createElement('section');
+        sec.className = 'section';
+        sec.innerHTML = `<h2>${safeText(secName)}</h2>`;
+        const table = document.createElement('table');
+        const tbody = document.createElement('tbody');
+
+        grouped[secName].forEach(row => {
+          const tr = document.createElement('tr');
+
+          const th = document.createElement('th');
+          th.textContent = safeText(row.label || '(Field)');
+
+          const td = document.createElement('td');
+          const valueDiv = document.createElement('div');
+          valueDiv.textContent = safeText(row.value || '');
+          td.appendChild(valueDiv);
+
+          if (Array.isArray(row.photos) && row.photos.length) {
+            const wrap = document.createElement('div');
+            wrap.className = 'photo-wrap';
+            row.photos.forEach(src => {
+              if (!src) return;
+              const img = document.createElement('img');
+              img.className = 'photo';
+              img.src = src;     // data URL from previous page
+              img.alt = 'Attached photo';
+              wrap.appendChild(img);
+            });
+            td.appendChild(wrap);
+          }
+
+          tr.appendChild(th);
+          tr.appendChild(td);
+          tbody.appendChild(tr);
+        });
+
+        table.appendChild(tbody);
+        sec.appendChild(table);
+        container.appendChild(sec);
+      });
+    }
+
+    /* --------- Ensure images are fully loaded before html2pdf --------- */
+    function waitForImagesIn(el) {
+      const imgs = Array.from(el.querySelectorAll('img'));
+      const pending = imgs.filter(img => !img.complete || img.naturalWidth === 0);
+      if (!pending.length) return Promise.resolve();
+      return Promise.all(pending.map(img => new Promise(res => { img.onload = img.onerror = () => res(); })));
+    }
+
+    /* ---------------- PDF generation ---------------- */
+    async function generatePDFBlob() {
+      const reportEl = document.getElementById('report');
+      // Wait for images (logo + thumbnails) to load before rasterizing
+      await waitForImagesIn(reportEl);
+
+      const opt = {
+        margin:       [10, 10, 10, 10],
+        filename:     `Voltempo-Commissioning-${new Date().toISOString().slice(0,10)}.pdf`,
+        image:        { type: 'jpeg', quality: 0.96 },
+        html2canvas:  { scale: 2, useCORS: true, allowTaint: true, logging: false, imageTimeout: 0 },
+        jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+      };
+      const worker = html2pdf().set(opt).from(reportEl);
+      const pdfBlob = await worker.outputPdf('blob'); // html2pdf 0.10.1+
+      return pdfBlob;
+    }
+
+    /* ---------------- Button handlers ---------------- */
+    function handleBack() {
+      if (history.length > 1) history.back();
+      else window.location.href = './';
+    }
+
+    async function handleView() {
+      const data = getCommissioningData();
+      if (!data) { document.getElementById('missing').style.display = 'block'; alert('No commissioning data found.'); return; }
+      try {
+        const blob = await generatePDFBlob();
+        const url = URL.createObjectURL(blob);
+        window.open(url, '_blank', 'noopener,noreferrer');
+        setTimeout(() => URL.revokeObjectURL(url), 60000);
+      } catch (e) {
+        console.error('View PDF failed:', e);
+        alert('Failed to generate PDF. See console for details.');
+      }
+    }
+
+    async function handlePrint() {
+      const data = getCommissioningData();
+      if (!data) { document.getElementById('missing').style.display = 'block'; alert('No commissioning data found.'); return; }
+      try {
+        const blob = await generatePDFBlob();
+        const url = URL.createObjectURL(blob);
+        const iframe = document.createElement('iframe');
+        iframe.style.position = 'fixed'; iframe.style.right = '0'; iframe.style.bottom = '0';
+        iframe.style.width = '0'; iframe.style.height = '0'; iframe.style.border = '0';
+        document.body.appendChild(iframe);
+        iframe.onload = () => {
+          setTimeout(() => {
+            try { iframe.contentWindow.focus(); iframe.contentWindow.print(); }
+            finally { URL.revokeObjectURL(url); document.body.removeChild(iframe); }
+          }, 600);
+        };
+        iframe.src = url;
+      } catch (e) {
+        console.error('Print failed:', e);
+        alert('Failed to generate PDF for printing.');
+      }
+    }
+
+    async function handleEmail() {
+      const data = getCommissioningData();
+      if (!data) { document.getElementById('missing').style.display = 'block'; alert('No commissioning data found.'); return; }
+      try {
+        const blob = await generatePDFBlob();
+        const file = new File([blob], 'commissioning-report.pdf', { type: 'application/pdf' });
+
+        if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
+          await navigator.share({ files: [file], title: 'Commissioning Report', text: 'Please find the commissioning report attached.' });
+          return;
+        }
+
+        // Fallback: download then open mailto
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url; a.download = 'commissioning-report.pdf';
+        document.body.appendChild(a); a.click(); document.body.removeChild(a);
+        setTimeout(() => URL.revokeObjectURL(url), 20000);
+
+        const subject = encodeURIComponent('Commissioning Report');
+        const body = encodeURIComponent('Hi,\n\nAttached is the commissioning report.\n\nIf the file did not attach automatically, please attach the downloaded PDF and send.\n\nThanks.');
+        window.location.href = `mailto:?subject=${subject}&body=${body}`;
+      } catch (e) {
+        console.error('Email flow failed:', e);
+        alert('Failed to prepare email for this browser.');
+      }
+    }
+
+    function handleSubmitPlaceholder() {
+      alert('Submit action not yet connected to a backend. I can wire this to Supabase/S3/EmailJS when you’re ready.');
+    }
+
+    /* ---------------- Init ---------------- */
+    (async function init() {
+      tryEmbedLogoDataURL('https://voltempo.com/wp-content/uploads/2024/12/logo-svg-2048x508.png');
+
+      const data = getCommissioningData();
+      if (!data) {
+        document.getElementById('missing').style.display = 'block';
+      } else {
+        setMeta(data.generatedAt);
+        buildReportView(data);
+      }
+
+      document.getElementById('backBtn').addEventListener('click', handleBack);
+      document.getElementById('viewBtn').addEventListener('click', handleView);
+      document.getElementById('printBtn').addEventListener('click', handlePrint);
+      document.getElementById('emailBtn').addEventListener('click', handleEmail);
+      document.getElementById('finalSubmitBtn').addEventListener('click', handleSubmitPlaceholder);
+    })();
+  </script>
+</body>
+</html>

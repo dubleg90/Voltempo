@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Voltempo Navigation</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --navy: #0d223f;
+      --navy-2: #142d53;
+      --teal: #00c4d6;
+      --green: #26d37b;
+      --white: #ffffff;
+    }
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: var(--navy);
+      color: var(--white);
+      padding: 40px 20px;
+      text-align: center;
+    }
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 30px;
+      color: var(--teal);
+    }
+    .button-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+    }
+    button {
+      width: 250px;
+      padding: 15px 30px;
+      border: none;
+      border-radius: 30px;
+      font-weight: 600;
+      font-size: 1rem;
+      color: var(--white);
+      background: linear-gradient(135deg, var(--teal), var(--green));
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    button:hover {
+      opacity: 0.9;
+    }
+    img {
+      max-height: 100px;
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+  <img src="https://voltempo.com/wp-content/uploads/2024/12/logo-svg-2048x508.png" alt="Voltempo Logo">
+  <h1></h1>
+
+  <div class="button-container">
+  <button onclick="window.location.href='dno.html'">DNO Finder</button>
+<button onclick="alert('Site Assessment page coming soon.')">Site Assessment</button>
+    <button onclick="alert('System Design page coming soon.')">System Design</button>
+    <button onclick="alert('Site Assessment page coming soon.')">Installation</button>
+    <button onclick="window.location.href='Commissionin App.html'">Commissioning</button>
+    <button onclick="window.location.href='https:/www.voltempo.com'">Support</button>
+
+  </div>
+</body>
+</html>

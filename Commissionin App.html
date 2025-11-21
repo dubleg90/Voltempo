@@ -546,7 +546,7 @@
   <div id="chargePodChecklist">
     <!-- Repeat this block with new labels -->
     <div class="item">
-      <label class="label-text">Is there any damage to the exterior panels of the Pod and Charge Satellites:</label>
+      <label class="label-text">Inspect pod and charge points for damage :</label>
       <select required style="padding: 8px; width: 20%; border-radius: 5px;">
         <option value="">-- Select --</option>
         <option value="Pass">Pass</option>
@@ -560,7 +560,7 @@
 
     <!-- Duplicate the div above for each new inspection point and change the label text accordingly -->
     <div class="item">
-      <label class="label-text">Ensure all door seals are intact and free from damage:</label>
+      <label class="label-text">Inspect door seals:</label>
       <select required style="padding: 8px; width: 20%; border-radius: 5px;">
         <option value="">-- Select --</option>
         <option value="Pass">Pass</option>
@@ -593,7 +593,7 @@
   <!-- Row 1 -->
   <div class="item">
     <label class="label-text">
-      Section 1 – Visual inspection of witness marks on main AC incoming bus bars ensure no movement has occurred during transit:
+      Check witness marks on AC incoming bus bars for movement:
     </label>
     <select required style="padding: 8px; width: 20%; border-radius: 5px;">
       <option value="">-- Select --</option>
@@ -609,7 +609,7 @@
   <!-- Row 2 -->
   <div class="item">
     <label class="label-text">
-      Visual inspection of LV cabinet checking cable terminations, DC PSU connectors are inserted, fuse holders are inserted and no visible damage:
+      Inspect LV cabinet for secure terminations, seated connectors, inserted fuses, and visible damage:
     </label>
     <select required style="padding: 8px; width: 20%; border-radius: 5px;">
       <option value="">-- Select --</option>
@@ -944,11 +944,11 @@ function collectFormData() {
       sectionId: 'podSection2InspectionSection',
       title: 'Pod – Section 2 Visual Inspections',
       questions: [
-        'Visual inspection of DC busbar connection witness marks, ensure no movement has occurred during transit.',
-        'Visual inspection of Power Module connectors, ensure connectors are mated correctly after transit.',
+        'Inspect DC busbar witness marks for movement.',
+        'Inspect power module connectors are fully mated.',
         'Ensure fan thermostats are set to 25°C.',
-        'Visual inspection of Network Compartments, ensure D-Type connectors and mini-fit connectors are seated correctly.',
-        'Visual inspection of 1000V Contactor compartments, ensure D-Type, mini-fit and faston connections are seated correctly.',
+        'Inspect network compartment connectors are seated correctly',
+        'nspect 1000V contactor compartment connectors are seated correctly.',
         'Ensure heater Control is set to 75%'
       ]
     });
@@ -959,7 +959,7 @@ function collectFormData() {
       sectionId: 'podSection3InspectionSection',
       title: 'Pod – Section 3 Visual Inspections',
       questions: [
-        'Visual inspection of DC busbar connection witness marks, ensure no movement has occurred during transit.',
+        'Inspect DC busbar witness marks for movement.',
        
       ]
     });
@@ -969,7 +969,7 @@ function collectFormData() {
       sectionId: 'podSection4InspectionSection',
       title: 'Pod – Section 4 Visual Inspections',
       questions: [
-        'Visual inspection of DC busbar connection witness marks, ensure no movement has occurred during transit.',
+        'Inspect DC busbar witness marks for movement.',
         
       ]
     });
@@ -979,10 +979,10 @@ function collectFormData() {
       sectionId: 'podSection5InspectionSection',
       title: 'Pod – Section 5 Visual Inspections',
       questions: [
-        'Visual inspection of DC busbar connection witness marks, ensure no movement has occurred during transit.',
-        'Visual inspection of PC & vSECC Compartment, ensure D-Type connectors, ethernet connections, fuse holders are inserted, vSECC connectors are seated correctly and mini-fit connectors are seated correctly.',
+        'Inspect DC busbar witness marks for movement.',
+        'Inspect PC & vSECC connectors (D-Type, Ethernet, fuse holders, mini-fit) are fully seated.',
         'Ensure PC connections are correct and seated correctly.',
-        'Visual inspection of 1000V Outgoing Compartment, ensure D-Type connectors, mini-fit and faston connectors are seated correctly.'
+        'Inspect 1000V outgoing compartment connectors (D-Type, mini-fit, faston) are seated correctly.'
       
       ]
     });
@@ -992,12 +992,12 @@ const cpSection = addFollowOnInspectionSection({
   sectionId: 'CPInspectionSection',
   title: 'Charge Points',
   questions: [
-    'Charge Point A',
-    'Charge Point B',
-    'Charge Point C',
-    'Charge Point D',
-    'Charge Point E',
-    'Charge Point F'
+    'Charge Point 1',
+    'Charge Point 2',
+    'Charge Point 3',
+    'Charge Point 4',
+    'Charge Point 5',
+    'Charge Point 6'
   ]
 });
 
@@ -1020,16 +1020,16 @@ const liveTestsSection = addFollowOnInspectionSection({
   sectionId: 'liveTestsSection',
   title: 'Live Checks',
   questions: [
-    'Section1 - Check phase voltage at MCB6 & MCB7 are 400V AC +/- 20V.',
-    'Section1 - Check line voltage at MCB1 is 230V AC +/- 20V.',
-    'Section1 - Turn ON MCB1, MCB2, MCB3 & RCD1 confirm PSU3 & PSU4 energise. Confirm 24V DC +/- 0.5V on both PSU outputs.',
-    'Section1 - Turn ON MCB4 check voltage at transformer TA1 is 110v AC.',
-    'Section1 - Turn ON MCB6 & MCB7 confirm PSU1 & PSU2 energise. Confirm 24V DC +/- 0.5V on both PSU outputs.',
-    'Section2/3/4 - Energise each power module by turning on each MCB, ensure each power module powers on, ensure each power module in in SLP mode.',
-    'Section2/3/4 - Turn each fan thermostat to 0°C and ensure each fan runs. After check turn thermostat back to 25°C.',
-    'Section2/3/4 - Ensure heater controls is set to 75%.',
-    'Section2/3/4/5 - Ensure control boards are powered on.',
-    'Section5 - Ensure vSECCs and PC are powered on.'
+    'Check voltage at MCB6 & MCB7 are 400V AC.',
+    'Check voltage at MCB1 is 230V AC.',
+    'Turn ON MCB1–3 & RCD1; verify PSU3 & PSU4 ON',
+    'Turn ON MCB4 check voltage at transformer TA1 is 110v AC.',
+    'Turn ON MCB6 & MCB7; confirm PSU1 & PSU2 ON; check 24V DC',
+    'Energise power modules, ensure each power module in in SLP mode.',
+    'Turn thermostats to 0°C and confirm fans run, Reset thermostats to 25°C.',
+    'Ensure heater controls is set to 75%.',
+    'Ensure control boards are powered on.',
+    'Ensure vSECCs and PC are powered on.'
 
   ]
   
@@ -1088,9 +1088,7 @@ if (cpSection) {
   const desc = document.createElement('p');
   desc.className = 'section-desc';
   desc.textContent =
-    'Visual inspection of DC+/DC-/PE busbar connection witness marks, ensure control cables are terminated correctly. ' +
-    'Inspect cooling pipes for damage and loose connections. Ensure CP is fixed to the floor and level. ' +
-    'Check dispensing cable for damage and check connector head for damage or pushed back pins.';
+    'Inspect DC+/DC-/PE busbar witness marks and confirm control cables are terminated correctly. Inspect cooling pipes for damage and loose connections. Ensure the CP is fixed securely to the floor and level. Check dispensing cable and connector head for damage or pushed-back pins.';
   const h2 = cpSection.querySelector('h2');
   if (h2) h2.insertAdjacentElement('afterend', desc);
 }
